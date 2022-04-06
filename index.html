@@ -9,38 +9,92 @@
   <body>
     <h1>Sorteador Ri Rep</h1>
     <h3>Quantas vezes já recebeu VIP:</h3>
-    <form onsubmit="return onSubmit();">
+    <form onsubmit="sortear()" id="form">
       <label for="jags">jags:</label><br />
-      <input type="number" id="jags" name="jags" value="0" /><br /><br />
+      <input type="number" id="0" name="jags" value="0" /><br /><br />
       <label for="gaiola">gaiola:</label><br />
-      <input type="number" id="gaiola" name="gaiola" value="0" /><br /><br />
+      <input type="number" id="1" name="gaiola" value="0" /><br /><br />
       <label for="torrent">torrent:</label><br />
-      <input type="number" id="torrent" name="torrent" value="0" /><br /><br />
+      <input type="number" id="2" name="torrent" value="0" /><br /><br />
       <label for="lings">lings:</label><br />
-      <input type="number" id="lings" name="lings" value="0" /><br /><br />
+      <input type="number" id="3" name="lings" value="0" /><br /><br />
       <label for="mamando">mamando:</label><br />
-      <input type="number" id="mamando" name="mamando" value="0" /><br /><br />
+      <input type="number" id="4" name="mamando" value="0" /><br /><br />
       <label for="glock">glock:</label><br />
-      <input type="number" id="glock" name="glock" value="0" /><br /><br />
+      <input type="number" id="5" name="glock" value="0" /><br /><br />
       <label for="muro">muro:</label><br />
-      <input type="number" id="muro" name="muro" value="0" /><br /><br />
+      <input type="number" id="6" name="muro" value="0" /><br /><br />
       <label for="gutin">gutin:</label><br />
-      <input type="number" id="gutin" name="gutin" value="0" /><br /><br />
-      <label for="pinça">pinça:</label><br />
-      <input type="number" id="pinça" name="pinça" value="0" /><br /><br />
+      <input type="number" id="7" name="gutin" value="0" /><br /><br />
+      <label for="pinca">pinça:</label><br />
+      <input type="number" id="8" name="pinca" value="0" /><br /><br />
       <label for="naners">naners:</label><br />
-      <input type="number" id="naners" name="naners" value="0" /><br /><br />
+      <input type="number" id="9" name="naners" value="0" /><br /><br />
       <label for="jueio">jueio:</label><br />
-      <input type="number" id="jueio" name="jueio" value="0" /><br /><br />
+      <input type="number" id="10" name="jueio" value="0" /><br /><br />
       <label for="liro">liro:</label><br />
-      <input type="number" id="liro" name="liro" value="0" /><br /><br />
+      <input type="number" id="11" name="liro" value="0" /><br /><br />
       <input type="submit" value="qsorteio" />
     </form>
+
+    <h2>Vencedor:</h2>
+    <input type="text" id="winner" value="" />
   </body>
 
   <script>
-    function onSubmit() {
-      alert("bora porra");
+    function sortear() {
+      var rirrepers = {};
+      var form = document.getElementById("form");
+      [...form.elements].forEach((elm) => {
+        if (elm.type === "number") {
+          rirrepers[elm.name] = elm.value;
+        }
+      });
+
+      nvips = Object.values(rirrepers);
+      lcm = leastCommonMultiple(nvips);
+      weights = nvips.map((n) => {
+        return n > 0 ? lcm / n : 0;
+      });
+
+      idx = weightedRandom(weights);
+      winner = document.getElementById(`${idx}`).name;
+      document.getElementById("winner").value = winner;
+    }
+
+    function weightedRandom(weights) {
+      const cumulativeWeights = [];
+      for (let i = 0; i < weights.length; ++i) {
+        cumulativeWeights[i] = weights[i] + (cumulativeWeights[i - 1] || 0);
+      }
+      const maxCumulativeWeight =
+        cumulativeWeights[cumulativeWeights.length - 1];
+      const randomNumber = maxCumulativeWeight * Math.random();
+
+      for (let itemIndex = 0; itemIndex < weights.length; ++itemIndex) {
+        if (cumulativeWeights[itemIndex] >= randomNumber) {
+          return itemIndex;
+        }
+      }
+    }
+
+    function leastCommonMultiple(arr) {
+      function gcd(a, b) {
+        return !b ? a : gcd(b, a % b);
+      }
+
+      function lcm(a, b) {
+        return (a * b) / gcd(a, b);
+      }
+
+      var multiple = 1;
+      arr.forEach((n) => {
+        if (n > 0) {
+          multiple = lcm(multiple, n);
+        }
+      });
+
+      return multiple;
     }
   </script>
 </html>
