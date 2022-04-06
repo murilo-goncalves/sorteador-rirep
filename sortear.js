@@ -7,11 +7,16 @@ function sortear() {
     }
   });
 
-  nvips = Object.values(rirrepers);
-  lcm = leastCommonMultiple(nvips);
-  weights = nvips.map((n) => {
-    return n > 0 ? lcm / n : 0;
+  nvips = Object.values(rirrepers).map((n) => {
+    return parseInt(n, 10);
   });
+  nMaxVip = Math.max.apply(null, nvips);
+
+  weights = nvips.map((n) => {
+    return n < 0 ? 0 : 1 + nMaxVip - n;
+  });
+
+  console.log(weights);
 
   idx = weightedRandom(weights);
   winner = document.getElementById(`${idx}`).name;
@@ -33,21 +38,21 @@ function weightedRandom(weights) {
   }
 }
 
-function leastCommonMultiple(arr) {
-  function gcd(a, b) {
-    return !b ? a : gcd(b, a % b);
-  }
+// function leastCommonMultiple(arr) {
+//   function gcd(a, b) {
+//     return !b ? a : gcd(b, a % b);
+//   }
 
-  function lcm(a, b) {
-    return (a * b) / gcd(a, b);
-  }
+//   function lcm(a, b) {
+//     return (a * b) / gcd(a, b);
+//   }
 
-  var multiple = 1;
-  arr.forEach((n) => {
-    if (n > 0) {
-      multiple = lcm(multiple, n);
-    }
-  });
+//   var multiple = 1;
+//   arr.forEach((n) => {
+//     if (n > 0) {
+//       multiple = lcm(multiple, n);
+//     }
+//   });
 
-  return multiple;
-}
+//   return multiple;
+// }
