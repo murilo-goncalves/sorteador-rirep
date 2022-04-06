@@ -22,6 +22,8 @@ function sortear() {
   winner = document.getElementById(`${idx}`).name;
   document.getElementById("winner").value = winner;
   document.getElementById("rirreper").src = `images/${winner}.jpg`;
+
+  startConfetti();
 }
 
 function weightedRandom(weights) {
