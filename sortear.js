@@ -21,6 +21,7 @@ function sortear() {
   idx = weightedRandom(weights);
   winner = document.getElementById(`${idx}`).name;
   document.getElementById("winner").value = winner;
+  document.getElementById("rirreper").src = `images/${winner}.jpg`;
 }
 
 function weightedRandom(weights) {
