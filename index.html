@@ -9,7 +9,7 @@
   <body>
     <h1>Sorteador Ri Rep</h1>
     <h3>Quantas vezes já recebeu VIP:</h3>
-    <form onsubmit="sortear()" id="form">
+    <form id="form">
       <label for="jags">jags:</label><br />
       <input type="number" id="0" name="jags" value="0" /><br /><br />
       <label for="gaiola">gaiola:</label><br />
@@ -34,8 +34,9 @@
       <input type="number" id="10" name="jueio" value="0" /><br /><br />
       <label for="liro">liro:</label><br />
       <input type="number" id="11" name="liro" value="0" /><br /><br />
-      <input type="submit" value="qsorteio" />
     </form>
+
+    <button type="button" onclick="sortear()">vambora</button>
 
     <h2>Vencedor:</h2>
     <input type="text" id="winner" value="" />
